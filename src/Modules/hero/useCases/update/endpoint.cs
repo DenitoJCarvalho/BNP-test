@@ -1,4 +1,7 @@
+
+
 using backend_challenge.context;
+
 
 namespace backend_challenge.Modules.hero.useCases.update;
 
@@ -20,12 +23,14 @@ public class HeroUpdateEndPoint : Endpoint<Request, Response, Mapper>
     {
         try
         {
-            var updateData = Map.ToEntity(req);
+            var updateData = Map.ToEntity(req);;
 
             var useCase = new HeroUpdateUseCase(_dbContext);
             var updatedHero = await useCase.exec(updateData);
 
             var response = Map.FromEntity(updatedHero);
+
+            
 
             await SendAsync(response);
         }
