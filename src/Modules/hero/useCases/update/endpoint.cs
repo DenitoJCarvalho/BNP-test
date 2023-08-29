@@ -23,9 +23,17 @@ public class HeroUpdateEndPoint : Endpoint<Request, Response, Mapper>
     {
         try
         {
-            var updateData = Map.ToEntity(req);;
+            var updateData = Map.ToEntity(req);
+
+            var existHero = await _dbContext.Heroes.FindAsync(updateData.id);
+
+            if(existHero != null) 
+            {
+                ThrowError($"Herói com o id: {updateData.id} não encontrado.");
+            }
 
             var useCase = new HeroUpdateUseCase(_dbContext);
+          
             var updatedHero = await useCase.exec(updateData);
 
             var response = Map.FromEntity(updatedHero);
