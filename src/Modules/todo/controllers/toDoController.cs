@@ -79,4 +79,28 @@ public class TodoController : ITask
     }
   }
   #endregion  
+
+  #region DeleteTask
+  public async Task<ToDo> DeleteTask(Guid id)
+  {
+    try
+    {
+      var validateId = await _context.ToDos.FirstOrDefaultAsync(dt => dt.id.Equals(id));
+
+      if (validateId is null)
+      {
+        throw new ArgumentNullException(nameof(validateId), $"Id não encontrado para exclusão.");
+      }
+
+      _context.ToDos.Remove(validateId);
+      await _context.SaveChangesAsync();
+
+      return validateId;
+    }
+    catch (Exception ex)
+    {
+      throw new Exception(ex.Message);
+    }
+  }
+  #endregion
 }

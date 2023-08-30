@@ -8,4 +8,6 @@ public interface ITask
     Task<List<ToDo>> ViewTask();
 
     Task<ToDo> EditTask(Guid id);
+
+    Task<ToDo> DeleteTask(Guid id);
 }
