@@ -63,7 +63,7 @@ public class TodoController : ITask
 
       var item = new ToDo
       {
-        id = validateId.id,
+        name = validateId.name,
         description = validateId.description
       };
 
@@ -93,6 +93,33 @@ public class TodoController : ITask
       }
 
       _context.ToDos.Remove(validateId);
+      await _context.SaveChangesAsync();
+
+      return validateId;
+    }
+    catch (Exception ex)
+    {
+      throw new Exception(ex.Message);
+    }
+  }
+  #endregion
+
+  #region MarkAsCompleted
+  public async Task<ToDo> MarkAsCompleted(Guid id)
+  {
+    try
+    {
+      var validateId = await _context.ToDos.FirstOrDefaultAsync(mac => mac.id.Equals(id));
+
+      if (validateId is null)
+      {
+        throw new ArgumentNullException(nameof(validateId), $"Id não encontrado para atualização de tarefa.");
+      }
+
+      validateId.status = StatusTask.Concluido;
+      validateId.dataCriacao = DateTime.Now;
+
+      _context.ToDos.Update(validateId);
       await _context.SaveChangesAsync();
 
       return validateId;

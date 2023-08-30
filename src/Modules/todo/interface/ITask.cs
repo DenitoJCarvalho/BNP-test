@@ -10,4 +10,6 @@ public interface ITask
     Task<ToDo> EditTask(Guid id);
 
     Task<ToDo> DeleteTask(Guid id);
+
+    Task<ToDo> MarkAsCompleted(Guid id);
 }
