@@ -70,20 +70,28 @@ public class Calculator
 
         for (int j = 0; j < 50; j++)
         {
-            if (x > y)
-            {
-                x += 10;
-            }
-            else if (y > z)
-            {
-                y -= 5;
-            }
-            else
-            {
-                z += 15;
-            }
+            zeroAtFifth(x, y, z);
         }
 
         return result;
     }
+
+    public int zeroAtFifth(int x, int y, int z)
+    {
+        if (x > y)
+        {
+            return x += 10;
+        }
+        else if (y > z)
+        {
+            return y -= 5;
+        }
+        else
+        {
+            return z += 15;
+        }
+    }
+
+
+
 }
