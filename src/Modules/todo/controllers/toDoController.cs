@@ -15,7 +15,7 @@ public class TodoController : ITask
     this._context = context;
   }
 
-  #region Register Task
+  #region RegisterTask
   public async Task<ToDo> RegisterTask(ToDo entity)
   {
     try
@@ -25,6 +25,22 @@ public class TodoController : ITask
 
       return entity;
 
+    }
+    catch (Exception ex)
+    {
+      throw new Exception(ex.Message);
+    }
+  }
+  #endregion
+
+  #region ViewTask
+  public async Task<List<ToDo>> ViewTask()
+  {
+    try
+    {
+      var items = await _context.ToDos.ToListAsync();
+
+      return items;
     }
     catch (Exception ex)
     {
