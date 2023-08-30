@@ -29,7 +29,6 @@ public class HeroData : IHero
         return await query.ToListAsync();
     }
 
-
     public async Task<Hero?> readOne(Guid id)
     {
         var hero = await _context.Heroes.FindAsync(id);
@@ -56,4 +55,8 @@ public class HeroData : IHero
 
         return await _context.SaveChangesAsync();
     }
+
+    
+
+    
 }

@@ -1,23 +1,26 @@
 using backend_challenge.Modules.hero.repository;
 using backend_challenge.Modules.superpower.repository;
 using backend_challenge.Modules.uniformColor.repository;
+using backend_challenge.Modules.todo;
 
 namespace backend_challenge.context;
 
 public class AppDbContext : DbContext
 {
-    public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) {}
+    public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
     public DbSet<Hero>? Heroes { get; set; }
     public DbSet<Superpower>? SuperPowers { get; set; }
     public DbSet<UniformColor>? UniformColors { get; set; }
+
+    public DbSet<ToDo>? ToDos { get; set; }
 
     protected override void OnModelCreating(ModelBuilder mb)
     {
         #region Hero
         mb.Entity<Hero>()
             .HasKey(hero => hero.id);
-        
+
         mb.Entity<Hero>()
             .Property(hero => hero.name)
             .IsRequired();
@@ -26,7 +29,7 @@ public class AppDbContext : DbContext
         #region Superpower
         mb.Entity<Superpower>()
             .HasKey(superpower => superpower.id);
-        
+
         mb.Entity<Superpower>()
             .HasData(
                 new Superpower { id = Guid.NewGuid(), name = "Super Strength" },
@@ -55,6 +58,28 @@ public class AppDbContext : DbContext
                 new UniformColor { id = Guid.NewGuid(), name = "Black" },
                 new UniformColor { id = Guid.NewGuid(), name = "White" }
             );
+        #endregion
+
+        #region ToDo
+
+        mb.Entity<ToDo>()
+            .HasKey(todo => todo.id);
+
+        mb.Entity<ToDo>()
+            .Property(todo => todo.name);
+
+        mb.Entity<ToDo>()
+            .Property(todo => todo.description);
+
+        mb.Entity<ToDo>()
+            .Property(todo => todo.status);
+
+        mb.Entity<ToDo>()
+            .Property(todo => todo.dataCriacao);
+
+        mb.Entity<ToDo>()
+            .Property(todo => todo.dataConclusao);
+
         #endregion
     }
 }

@@ -14,14 +14,13 @@ public class ToDo
     {
         id = Guid.NewGuid();
         dataCriacao = DateTime.UtcNow;
-        status = StatusTask.Inicio;
+        status = StatusTask.Pendente;
     }
 }
 
 #region Status
 public enum StatusTask
 {
-    Inicio = 0,
     Pendente = 1,
     EmAndamento = 2,
     Concluido = 3
