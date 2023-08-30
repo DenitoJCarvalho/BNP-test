@@ -48,4 +48,35 @@ public class TodoController : ITask
     }
   }
   #endregion
+
+  #region EditTask
+  public async Task<ToDo> EditTask(Guid id)
+  {
+    try
+    {
+      var validateId = await _context.ToDos.FirstOrDefaultAsync(et => et.id.Equals(id));
+
+      if (validateId is null)
+      {
+        throw new ArgumentNullException(nameof(validateId), $"Id não encontrado.");
+      }
+
+      var item = new ToDo
+      {
+        id = validateId.id,
+        description = validateId.description
+      };
+
+      _context.ToDos.Update(item);
+      await _context.SaveChangesAsync();
+
+      return item;
+
+    }
+    catch (Exception ex)
+    {
+      throw new Exception(ex.Message);
+    }
+  }
+  #endregion  
 }
